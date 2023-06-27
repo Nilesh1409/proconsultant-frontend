@@ -179,18 +179,26 @@ const Jumbotron: FC = () => {
                   </div>
                 </div>
               </form> */}
-              {authContext?.state?.user?.role === "recruiter" ? (
-                ""
-              ) : (
+              {
                 <NavLink
                   style={{ borderRadius: "25px" }}
                   className="search-job button btn btn-common"
                   //
-                  to={authContext?.state?.isAuthenticated ? "/jobs" : "/login"}
+                  to={
+                    authContext?.state?.isAuthenticated &&
+                    authContext?.state?.user?.role == "recruiter"
+                      ? "/employer/post-job/"
+                      : authContext?.state?.isAuthenticated
+                      ? "/jobs"
+                      : "/login"
+                  }
                 >
-                  Find Job
+                  {authContext?.state?.isAuthenticated &&
+                  authContext?.state?.user?.role == "recruiter"
+                    ? " Post Job"
+                    : "Find Job"}
                 </NavLink>
-              )}
+              }
             </div>
           </div>
         </div>

@@ -49,15 +49,7 @@ const RegisterPage = () => {
       setPhoneError("Please enter valid phone number");
       return;
     }
-    if (
-      !phone ||
-      !password ||
-      !firstName ||
-      !lastName ||
-      !firstName ||
-      !gender ||
-      !role
-    ) {
+    if (!phone || !password || !firstName || !lastName || !firstName || !role) {
       addToast("All fields are required", { appearance: "error" });
       setSubmitted(false);
       return true;
@@ -80,7 +72,6 @@ const RegisterPage = () => {
       phone: phoneInNumber,
       password: password,
       password2: password2,
-      gender: gender,
       role: role,
       name: {
         first: firstName,
@@ -98,17 +89,23 @@ const RegisterPage = () => {
         if (res.status == 201) setIsNavigate(true);
       })
       .catch((err) => {
+        if (err.response.status == 409) {
+          setPhoneError("This number is already register!");
+          return;
+        }
         if (err.response.status == 500) {
-          swal("Good job!", "Successfully registered!", "success");
+          swal("Good job!", "Successfully registered!", "error");
           setSubmitted(false);
-          addToast("Registered successfully", { appearance: "success" });
+          addToast("Something went wrong. Try after sometime", {
+            appearance: "error",
+          });
           setIsNavigate(true);
           console.log("error 500", err);
           return;
         }
         console.log("register err", err);
         setSubmitted(false);
-        addToast("Register failed", { appearance: "error" });
+        addToast("Register failed!", { appearance: "error" });
       });
   };
 
@@ -231,7 +228,7 @@ const RegisterPage = () => {
                       ""
                     )}
                   </div>
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <div className="input-icon">
                       <select
                         className="form-control"
@@ -244,7 +241,7 @@ const RegisterPage = () => {
                         <option value="female">Female</option>
                       </select>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="form-group">
                     <div className="input-icon">
                       <select

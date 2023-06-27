@@ -21,6 +21,8 @@ const LoginPage: FC = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState("");
   const [isNavigate, setIsNavigate] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const authContext = useContext(AuthContext);
@@ -37,31 +39,40 @@ const LoginPage: FC = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
-    setSubmitted(true);
 
-    if (!phone && !password) {
+    if (!phone || !password) {
       setSubmitted(false);
-      alert("All fields are required");
+      addToast("All fields are required", {
+        appearance: "error",
+        autoDismiss: true,
+      });
       return true;
+    }
+    if (password.length < 6) {
+      setPasswordError("Password is too small!");
+      return;
     }
     let phoneInNumber = +phone;
     const postData = {
       phone: phoneInNumber,
       password: password,
     };
-
+    setSubmitted(true);
     const loginUser = async () => {
       try {
         const res = await AxiosConfig.post("auth/login", postData);
         console.log("res on login", res);
+
         let decoded = jwtDecode<IJwtPayload>(res.data.token);
         console.log("decoded", decoded);
+        console.log("id: decoded.sub", decoded.sub);
         authContext.authDispatch({
           type: authContext.ActionTypes.LOGIN,
           payload: {
             user: decoded.user || {},
             token: res.data.token,
             refreshToken: res.data.refresh,
+            id: decoded.sub || null,
           },
         });
         addToast("Logged in successfully", {
@@ -77,12 +88,23 @@ const LoginPage: FC = () => {
         }
       } catch (err: any) {
         if (err.response && err.response.status === 401) {
-          addToast(err.response.data.message, {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          err?.response?.data?.message
+            ? setPasswordError(err.response.data.message)
+            : setPasswordError("Wrong password.");
+          // addToast(err.response.data.message, {
+          //   appearance: "error",
+          //   autoDismiss: true,
+          // });
         } else if (err.response && err.response.status === 404) {
-          addToast("Given mobile number is not register!", {
+          setPhoneNumberError(
+            "No user associated with the provided phone number."
+          );
+          // addToast("No user associated with the provided phone number.", {
+          //   appearance: "error",
+          //   autoDismiss: true,
+          // });
+        } else if (err.response && err.response.status === 500) {
+          addToast("Something went wrong. Try after sometime", {
             appearance: "error",
             autoDismiss: true,
           });
@@ -137,11 +159,17 @@ const LoginPage: FC = () => {
                         placeholder="Phone number"
                         value={phone}
                         onChange={(e) => {
+                          setPhoneNumberError("");
                           e.target.value.length <= 10
                             ? setPhone(e.target.value)
                             : "";
                         }}
                       />
+                      {phoneNumberError ? (
+                        <div className="text-danger">{phoneNumberError}</div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
                   <div className="form-group">
@@ -152,20 +180,25 @@ const LoginPage: FC = () => {
                         className="form-control"
                         placeholder="Password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {
+                          setPasswordError("");
+                          setPassword(e.target.value);
+                        }}
                       />
+                      {passwordError ? (
+                        <div className="text-danger">{passwordError}</div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
-                  <div className="form-group form-check">
+                  {/* <div className="form-group form-check">
                     <input
                       type="checkbox"
                       className="form-check-input"
                       id="exampleCheck1"
                     />
-                    <label className="form-check-label" htmlFor="exampleCheck1">
-                      Keep Me Signed In
-                    </label>
-                  </div>
+                  </div> */}
                   <button
                     type="submit"
                     hidden={submitted}

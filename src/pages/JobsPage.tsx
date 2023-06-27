@@ -9,15 +9,21 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import JobItemSkeleton from "../components/skeletons/JobItemSkeleton";
 import BaseLayout from "../components/BaseLayout";
 import { IJob } from "../interfaces";
+import { AuthContext } from "../contexts/AuthContext";
+const { useToasts } = require("react-toast-notifications");
 
 const JobsPage = () => {
   const [jobs, setJobs] = useState<IJob[]>([]);
   const [visibleJobs, setVisibleJobs] = useState<IJob[]>([]);
   const [showLoadMore, setShowLoadMore] = useState(true);
   const jobContext = useContext(JobContext);
+  const authContext = useContext(AuthContext);
   const [position, setPosition] = useState("");
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const addToast = useToasts();
 
   const onLoadMore = () => {
     const currentIndex = visibleJobs.length;
@@ -27,6 +33,8 @@ const JobsPage = () => {
     if (nextIndex >= jobs.length) setShowLoadMore(false); // hide the button if there are no more jobs
   };
 
+  console.log("authcontext", authContext, jobContext);
+
   useEffect(() => {
     // const fetchData = async () => {
     //     await jobContext.jobDispatch({type: jobContext.ActionTypes.ALL_JOBS});
@@ -35,14 +43,33 @@ const JobsPage = () => {
     // };
     //
     // fetchData();
+    setIsLoading(true);
     AxiosConfig.get("jobs/")
       .then((res) => {
+        setIsLoading(false);
         setJobs(res.data.payLoad);
         console.log("res in get jobs", res.data.payLoad);
         setVisibleJobs(res.data.payLoad.slice(0, 10)); // show first 10 jobs
         if (res.data.payLoad.length <= 10) setShowLoadMore(false);
       })
-      .catch((err) => setError(err));
+      .catch((err) => {
+        setIsLoading(false);
+        console.log("🚀 ~ file: JobsPage err:", err);
+        if (err?.response?.status == 500) {
+          addToast("Something went wrong. Try after sometime", {
+            appearance: "error",
+            autoDismiss: true,
+          });
+        } else {
+          addToast(
+            "Something went wrong. Refresh the page or try after sometime.",
+            {
+              appearance: "error",
+              autoDismiss: true,
+            }
+          );
+        }
+      });
   }, []);
 
   const onSearch: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -124,7 +151,7 @@ const JobsPage = () => {
       <section id="featured" className="section bg-cyan">
         <div className="container">
           <div className="row">
-            {visibleJobs.length === 0 && (
+            {visibleJobs.length === 0 && isLoading ? (
               <>
                 {Array(6)
                   .fill(0)
@@ -132,6 +159,8 @@ const JobsPage = () => {
                     <JobItemSkeleton key={index} />
                   ))}
               </>
+            ) : (
+              <div> No jobs found! </div>
             )}
             {
               //  jobs.length ? console.log('123') :
