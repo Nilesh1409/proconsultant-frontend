@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { FC, useContext, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { NavLink, Navigate } from "react-router-dom";
 import Jumbotron from "./Jumbotron";
 import { AuthContext } from "../contexts/AuthContext";
@@ -25,8 +25,15 @@ const Header: FC = () => {
   const getFullName = () => {
     return `${user?.name?.first} ${user?.name?.last}`;
   };
+  console.log("🚀 ~ file: Header.tsx:30 ~ isNavigate:", isNavigate);
+  useEffect(() => {
+    if (isNavigate) {
+      setIsNavigate(false); // Reset the state to prevent infinite loop
+    }
+  }, [isNavigate]);
 
   if (isNavigate) {
+    // console.log("🚀 ~ file: Header.tsx:30 ~ isNavigate:", isNavigate);
     return <Navigate to="/" />;
   }
 

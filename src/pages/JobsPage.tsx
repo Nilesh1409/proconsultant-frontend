@@ -46,6 +46,7 @@ const JobsPage = () => {
     setIsLoading(true);
     AxiosConfig.get("jobs/")
       .then((res) => {
+        console.log("🚀 ~ file: JobsPage.tsx:49 ~ .then ~ res:", res);
         setIsLoading(false);
         setJobs(res.data.payLoad);
         console.log("res in get jobs", res.data.payLoad);

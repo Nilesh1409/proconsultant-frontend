@@ -26,7 +26,7 @@ const JobItem = ({ job }: { job: IJob }) => {
     }[type];
 
     return class_name
-      .toLowerCase()
+      ?.toLowerCase()
       .replace(/ /g, "-")
       .replace(/[^\w-]+/g, "");
   };
@@ -53,7 +53,9 @@ const JobItem = ({ job }: { job: IJob }) => {
                   {job.company}
                 </span>
               </div>
-              <span className={get_class(String(job.type))}>
+              <span
+              // className={get_class(String(job.type))}
+              >
                 {get_type(String(job.type))}
               </span>
               <br />
