@@ -15,7 +15,7 @@ const Footer: FC = () => {
                 <h3 className="block-title">Quick Links</h3>
                 <ul className="menu">
                   <li>
-                    <a href="#">About Us</a>
+                    <a href="/about">About Us</a>
                   </li>
                   <li>
                     <a href="#">Support</a>

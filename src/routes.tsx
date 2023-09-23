@@ -14,6 +14,7 @@ import DashboardPage from "./pages/employer/DashboardPage";
 import ApplicantsPage from "./pages/employer/ApplicantsPage";
 import ApplicantsPerJobPage from "./pages/employer/ApplicantsPerJobPage";
 import TextPostJob from "./pages/employer/PostJob";
+import AboutPage from "./pages/About";
 
 const BaseRouter = () => {
   return (
@@ -23,6 +24,7 @@ const BaseRouter = () => {
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/jobs/:jobId" element={<JobDetailsPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/register" element={<RegisterPage />} />
         {/* Employer routes */}
         <Route path="/employer/*" element={<EmployerPrivateRoute />} />
