@@ -4,6 +4,8 @@ import Slider from "react-slick";
 import { Paper, Grid, Typography } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useMediaQuery } from "@mui/material";
+
 // import "./TeamCarousel.css"; // Add custom CSS for styling
 
 // Sample data for team members
@@ -28,14 +30,16 @@ const teamMembers = [
 ];
 
 const TeamCarousel = () => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const slidesToShow = isMobile ? 1 : 3;
   const settings = {
     dots: false,
     infinite: true,
-    speed: 500,
-    slidesToShow: 3,
+    speed: 2000,
+    slidesToShow: slidesToShow,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 0,
     cssEase: "linear",
   };
 
