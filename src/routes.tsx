@@ -14,7 +14,7 @@ import DashboardPage from "./pages/employer/DashboardPage";
 import ApplicantsPage from "./pages/employer/ApplicantsPage";
 import ApplicantsPerJobPage from "./pages/employer/ApplicantsPerJobPage";
 import TextPostJob from "./pages/employer/PostJob";
-import AboutPage from "./pages/About";
+import AboutPage from "./pages/About/About";
 
 const BaseRouter = () => {
   return (

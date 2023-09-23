@@ -1,0 +1,81 @@
+/* About.css */
+
+/* Style for the entire About section */
+.about-section {
+  background-color: #f7f7f7;
+  padding: 80px 0;
+}
+
+/* Style for the main section title */
+.section-title {
+  color: #333;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Style for the About Card */
+.about-card {
+  background-color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for card titles */
+.card-title {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Style for card text */
+.card-text {
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Style for the list group in "What We Offer" section */
+.list-group {
+  margin-top: 20px;
+}
+
+/* Style for list items */
+.list-item {
+  color: #666;
+}
+
+/* Style for feature cards in "Why Choose Pro Consultant?" section */
+.feature-card {
+  /* background-color: #fff; */
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  min-height: 250px;
+  margin-bottom: 20px;
+}
+
+/* Style for feature titles */
+.feature-title {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Style for feature text */
+.feature-text {
+  color: #666;
+  line-height: 1.5;
+}
+.team-carousel {
+  margin: 100px 0;
+  /* display: inline-flex; */
+  align-items: center;
+}
+.team-carousel h2 {
+  font-size: 36px;
+  color: var(--theme-color);
+  margin-bottom: 30px;
+  margin-left: 10%;
+  margin: 30px auto;
+  width: 200px;
+  padding-left: 25px;
+}

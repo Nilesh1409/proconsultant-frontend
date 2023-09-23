@@ -1,7 +1,9 @@
 /* eslint-disable */
 import React, { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Footer: FC = () => {
+  let navigate = useNavigate();
   return (
     <footer>
       <section className="footer-Content">
@@ -15,7 +17,7 @@ const Footer: FC = () => {
                 <h3 className="block-title">Quick Links</h3>
                 <ul className="menu">
                   <li>
-                    <a href="/about">About Us</a>
+                    <a onClick={(e) => navigate("/about")}> About Us</a>
                   </li>
                   <li>
                     <a href="#">Support</a>
