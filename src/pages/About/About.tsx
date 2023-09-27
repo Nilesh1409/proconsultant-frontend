@@ -44,7 +44,7 @@ const AboutPage: React.FC = () => {
             <div className="founder-text">
               <h3>Rani Tiwari</h3>
               <p>
-                Rani Tiwari is the visionary leader behind Pro Cunsultant. With
+                Rani Tiwari is the visionary leader behind Pro Consultant. With
                 a passion for recruitment and a commitment to innovation, he has
                 guided the company to its current success.
               </p>
