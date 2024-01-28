@@ -4,38 +4,45 @@ import Slider from "react-slick";
 import { Paper, Grid, Typography } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useMediaQuery } from "@mui/material";
+import anjaliImg from "./img/anjali.jpeg";
+import priyanka_pathak from "./img/priyanka_pathak.jpeg";
+import tanvi_bangera from "./img/tanvi_bangera.jpeg";
+import priyankaImg from "./img/priyanka.jpeg";
+import pratibhaImg from "./img/pratibha.jpeg";
+
 // import "./TeamCarousel.css"; // Add custom CSS for styling
 
 // Sample data for team members
 const teamMembers = [
-  { id: 2, name: "Vaibhavi Bangera", image: "" },
-  { id: 3, name: "Priyanka", image: "" },
+  { id: 4, name: "Priyanka Pathak", image: priyanka_pathak },
   {
     id: 1,
     name: "Pratibha Shukla",
-    image:
-      "https://media.licdn.com/dms/image/D4D03AQERQdzGSKq2SA/profile-displayphoto-shrink_400_400/0/1679046793128?e=1700697600&v=beta&t=qmilY7zWYyMlJGBqIz2ayw2JiI_aqDLVMRJGVbiypQU",
+    image: pratibhaImg,
   },
-  { id: 4, name: "Vaibhavi Bangera", image: "" },
-  { id: 5, name: "Priyanka", image: "" },
+  { id: 5, name: "Anjali", image: anjaliImg },
   {
     id: 6,
-    name: "Pratibha Shukla",
-    image:
-      "https://media.licdn.com/dms/image/D4D03AQERQdzGSKq2SA/profile-displayphoto-shrink_400_400/0/1679046793128?e=1700697600&v=beta&t=qmilY7zWYyMlJGBqIz2ayw2JiI_aqDLVMRJGVbiypQU",
+    name: "Tanvi Bangera",
+    image: tanvi_bangera,
   },
+  { id: 2, name: "Vaibhavi Bangera", image: "" },
+  { id: 3, name: "Priyanka", image: priyankaImg },
   // Add more team members as needed
 ];
 
 const TeamCarousel = () => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const slidesToShow = isMobile ? 1 : 3;
   const settings = {
     dots: false,
     infinite: true,
-    speed: 500,
-    slidesToShow: 3,
+    speed: 2000,
+    slidesToShow: slidesToShow,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 0,
     cssEase: "linear",
   };
 

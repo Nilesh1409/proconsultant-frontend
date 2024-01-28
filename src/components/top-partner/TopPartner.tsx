@@ -75,7 +75,7 @@ const TopPartner: FC = () => {
           src={props.item.image}
         />
         <div style={{ textAlign: "center" }}>
-          <h2 style={{ fontSize: "22px" }}>{props.item.name}</h2>
+          {/* <h2 style={{ fontSize: "22px" }}>{props.item.name}</h2> */}
         </div>
         {/* <p>{props.item.description}</p> */}
 
